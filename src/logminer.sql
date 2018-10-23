@@ -14,6 +14,10 @@ create table logminerFiltered(
     sql_1 varchar(250)
 );
 
+
+
+
+-----------------------------------------------------------------------------------------------------
 EXECUTE DBMS_LOGMNR.ADD_LOGFILE(-
    LOGFILENAME => 'C:\GO\FlashRecoveryArea\GO\ARCHIVELOG\2018_10_19\O1_MF_1_36_FWLWTHFS_.ARC', -
        OPTIONS => DBMS_LOGMNR.NEW);
@@ -26,6 +30,10 @@ EXECUTE DBMS_LOGMNR.ADD_LOGFILE(-
 
 EXECUTE DBMS_LOGMNR.ADD_LOGFILE(-
    LOGFILENAME => 'C:\GO\FLASHRECOVERYAREA\GO\ARCHIVELOG\2018_10_19\O1_MF_1_39_FWN12ZY2_.ARC');
+
+-----------------------------------------------------------------------------------------------------
+
+
 
 EXECUTE DBMS_LOGMNR.START_LOGMNR( -
 OPTIONS => DBMS_LOGMNR.DICT_FROM_ONLINE_CATALOG + -
@@ -59,6 +67,7 @@ BEGIN
         insert into logminerFiltered values(username, operation, table_name, table_space, table_owner, date_, time_, sql_, sql_1);
         FETCH cur INTO username, operation, table_name, table_space, table_owner, date_, time_, sql_, sql_1;
     END LOOP;
+    commit;
     CLOSE cur;
 END;
 /
