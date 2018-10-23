@@ -8,5 +8,10 @@ connect system/manager as sysdba;
 drop user user1;
 drop user user2;
 drop user user3;
+commit;
 
 exit;
+
+SET LINESIZE 32000;
+SET PAGESIZE 40000;
+SET LONG 50000;
