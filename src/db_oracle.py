@@ -5,7 +5,7 @@ CONN_INFO = {
     'host': '127.0.0.1',
     'port': 1521,
     'user': 'sys',
-    'pass': 'manager',
+    'pass': 'k1n9r4d2',
     'service':'GO'
 }
 

@@ -1,1 +1,1 @@
-sqlplus system/manager as sysdba @buildsql.sql
+sqlplus system/manager as sysdba @crear.sql
