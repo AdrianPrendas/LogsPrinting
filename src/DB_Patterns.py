@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Patterns.ui'
+# Form implementation generated from reading ui file 'patterns.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.2
 #
@@ -11,7 +11,6 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore
 import os, sys
-
 class Ui_MainWindow(object):
     def about(self):            
          msg = QMessageBox(self.centralwidget)
@@ -19,7 +18,6 @@ class Ui_MainWindow(object):
          msg.setInformativeText("This is a educational project created by Roger Amador and Adrian Prendas")
          msg.setWindowTitle("DB_Patterns")
          msg.exec_()
-
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1077, 585)
@@ -53,8 +51,6 @@ class Ui_MainWindow(object):
         self.chooser.addItem("")
         self.chooser.addItem("")
         self.chooser.addItem("")
-        self.chooser.addItem("")
-        self.chooser.addItem("")
         self.gridLayout_2.addWidget(self.chooser, 0, 1, 1, 1)
         self.graphics = QtWidgets.QTabWidget(self.groupBox)
         self.graphics.setObjectName("graphics")
@@ -77,6 +73,11 @@ class Ui_MainWindow(object):
         self.tab_time.setObjectName("tab_time")
         self.graphics.addTab(self.tab_time, "")
         self.tab_sql = QtWidgets.QWidget()
+        self.tab_sql.setObjectName("tab_sql")
+        self.graphics.addTab(self.tab_sql, "")
+        self.tab_nsql = QtWidgets.QWidget()
+        self.tab_nsql.setObjectName("tab_nsql")
+        self.graphics.addTab(self.tab_nsql, "")
         self.gridLayout_2.addWidget(self.graphics, 1, 5, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.gridLayout_2.addItem(spacerItem, 2, 5, 1, 1)
@@ -99,7 +100,6 @@ class Ui_MainWindow(object):
         self.menuHelp = QtWidgets.QMenu(self.menuBar)
         self.menuHelp.setObjectName("menuHelp")
         MainWindow.setMenuBar(self.menuBar)
-
 
         self.actionNew = QtWidgets.QAction(MainWindow)
         self.actionNew.setObjectName("actionNew")
@@ -138,8 +138,6 @@ class Ui_MainWindow(object):
         self.actionToolbar.setObjectName("actionToolbar")
         self.actionSteps = QtWidgets.QAction(MainWindow)
         self.actionSteps.setObjectName("actionSteps")
-
-
         self.menuFile.addAction(self.actionNew_tab)
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionOpen)
@@ -182,6 +180,8 @@ class Ui_MainWindow(object):
         self.graphics.setTabText(self.graphics.indexOf(self.tab_operation), _translate("MainWindow", "OPERATION"))
         self.graphics.setTabText(self.graphics.indexOf(self.tab_date), _translate("MainWindow", "DATE"))
         self.graphics.setTabText(self.graphics.indexOf(self.tab_time), _translate("MainWindow", "TIME"))
+        self.graphics.setTabText(self.graphics.indexOf(self.tab_sql), _translate("MainWindow", "SQL"))
+        self.graphics.setTabText(self.graphics.indexOf(self.tab_nsql), _translate("MainWindow", "SQL-1"))
         self.label.setText(_translate("MainWindow", "    Graphics"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuEdit.setTitle(_translate("MainWindow", "Edit"))
