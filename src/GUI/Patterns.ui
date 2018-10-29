@@ -87,7 +87,7 @@
          <item row="1" column="5">
           <widget class="QTabWidget" name="graphics">
            <property name="currentIndex">
-            <number>0</number>
+            <number>5</number>
            </property>
            <widget class="QWidget" name="tab_user">
             <attribute name="title">
@@ -117,16 +117,6 @@
            <widget class="QWidget" name="tab_time">
             <attribute name="title">
              <string>TIME</string>
-            </attribute>
-           </widget>
-           <widget class="QWidget" name="tab_sql">
-            <attribute name="title">
-             <string>SQL</string>
-            </attribute>
-           </widget>
-           <widget class="QWidget" name="tab_nsql">
-            <attribute name="title">
-             <string>SQL-1</string>
             </attribute>
            </widget>
           </widget>
