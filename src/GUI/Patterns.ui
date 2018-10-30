@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1077</width>
+    <width>1088</width>
     <height>585</height>
    </rect>
   </property>
@@ -30,13 +30,10 @@
          <string>DBPatterns</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="0">
-          <widget class="QLineEdit" name="filter"/>
-         </item>
          <item row="0" column="2">
           <widget class="QPushButton" name="search">
            <property name="text">
-            <string>SEARCH</string>
+            <string>Search</string>
            </property>
           </widget>
          </item>
@@ -64,6 +61,11 @@
            </item>
            <item>
             <property name="text">
+             <string>SEG_OWNER</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
              <string>OPERATION</string>
             </property>
            </item>
@@ -84,42 +86,8 @@
            </item>
           </widget>
          </item>
-         <item row="1" column="5">
-          <widget class="QTabWidget" name="graphics">
-           <property name="currentIndex">
-            <number>5</number>
-           </property>
-           <widget class="QWidget" name="tab_user">
-            <attribute name="title">
-             <string>USER</string>
-            </attribute>
-           </widget>
-           <widget class="QWidget" name="tab_tbs_name">
-            <attribute name="title">
-             <string>TABLESPACE_NAME</string>
-            </attribute>
-           </widget>
-           <widget class="QWidget" name="tab_tb_name">
-            <attribute name="title">
-             <string>TABLE_NAME</string>
-            </attribute>
-           </widget>
-           <widget class="QWidget" name="tab_operation">
-            <attribute name="title">
-             <string>OPERATION</string>
-            </attribute>
-           </widget>
-           <widget class="QWidget" name="tab_date">
-            <attribute name="title">
-             <string>DATE</string>
-            </attribute>
-           </widget>
-           <widget class="QWidget" name="tab_time">
-            <attribute name="title">
-             <string>TIME</string>
-            </attribute>
-           </widget>
-          </widget>
+         <item row="0" column="0">
+          <widget class="QLineEdit" name="filter"/>
          </item>
          <item row="2" column="5">
           <spacer name="verticalSpacer">
@@ -137,10 +105,262 @@
            </property>
           </spacer>
          </item>
-         <item row="1" column="0" rowspan="2" colspan="3">
-          <widget class="QTableView" name="tableView"/>
+         <item row="3" column="0">
+          <widget class="QPushButton" name="loadButton">
+           <property name="text">
+            <string>Load data</string>
+           </property>
+          </widget>
          </item>
-         <item row="0" column="5">
+         <item row="2" column="4">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="3" colspan="3">
+          <widget class="QTabWidget" name="graphics">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <widget class="QWidget" name="tab_user">
+            <attribute name="title">
+             <string>USER</string>
+            </attribute>
+            <widget class="QWidget" name="userWidget" native="true">
+             <property name="geometry">
+              <rect>
+               <x>-1</x>
+               <y>-1</y>
+               <width>441</width>
+               <height>381</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+           <widget class="QWidget" name="tab_tbs_name">
+            <attribute name="title">
+             <string>TABLESPACE</string>
+            </attribute>
+            <widget class="QWidget" name="tbsWidget" native="true">
+             <property name="geometry">
+              <rect>
+               <x>-1</x>
+               <y>-1</y>
+               <width>441</width>
+               <height>381</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+           <widget class="QWidget" name="tab_tb_name">
+            <attribute name="title">
+             <string>TABLE</string>
+            </attribute>
+            <widget class="QWidget" name="tableWidget_2" native="true">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>441</width>
+               <height>381</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+           <widget class="QWidget" name="tab_owner">
+            <attribute name="title">
+             <string>SEG_OWNER</string>
+            </attribute>
+            <widget class="QWidget" name="ownerWidget" native="true">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>441</width>
+               <height>381</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+           <widget class="QWidget" name="tab_operation">
+            <attribute name="title">
+             <string>OPERATION</string>
+            </attribute>
+            <widget class="QWidget" name="operationWidget" native="true">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>441</width>
+               <height>381</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+           <widget class="QWidget" name="tab_date">
+            <attribute name="title">
+             <string>DATE</string>
+            </attribute>
+            <widget class="QWidget" name="dateWidget" native="true">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>441</width>
+               <height>381</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+           <widget class="QWidget" name="tab_time">
+            <attribute name="title">
+             <string>TIME</string>
+            </attribute>
+            <widget class="QWidget" name="timeWidget" native="true">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>441</width>
+               <height>381</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </widget>
+         </item>
+         <item row="1" column="0" rowspan="2" colspan="3">
+          <widget class="QTableWidget" name="tableWidget">
+           <property name="columnCount">
+            <number>9</number>
+           </property>
+           <column>
+            <property name="text">
+             <string>USER_NAME</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>TABLESPACE</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>TABLE</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>SEG_OWNER</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>OPERATION</string>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>SQL</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>SQL_-1</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>DATE</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>TIME</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item row="0" column="3">
           <widget class="QLabel" name="label">
            <property name="text">
             <string>    Graphics</string>
@@ -159,7 +379,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1077</width>
+     <width>1088</width>
      <height>21</height>
     </rect>
    </property>

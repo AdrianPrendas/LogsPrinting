@@ -8,7 +8,7 @@ CONN_INFO = {
     'pass': 'k1n9r4d2',
     'service':'GO'
 }
-
+  
 CONN_STR = '{user}/{pass}@{host}:{port}/{service}'.format(**CONN_INFO)
 
 class DB:

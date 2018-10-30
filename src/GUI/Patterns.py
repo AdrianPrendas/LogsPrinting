@@ -7,52 +7,13 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-from PyQt5 import QtCore
-import os, sys
-import connection as window_conect
-import analisis as analisis
 
 class Ui_MainWindow(object):
-    def userGraphic(self):
-        self.userWidget.setPixmap(analisis.userGraphic()) 
-        
-    def tableGraphic(self):
-        self.tableWidget.setPixmap(analisis.tableGraphic())   
-
-    def tablespaceGraphic(self):
-        self.tbsWidget.setPixmap(analisis.tablespaceGraphic())  
-
-    def operationGraphic(self):
-        self.operationWidget.setPixmap(analisis.operationGraphic())
-
-    def dateGraphic(self):
-        self.dateWidget.setPixelmap(analisis.dateGraphic())
-
-    def timeGraphic(self):
-        self.timeWidget.setPixelmap(analisis.timeGraphic())    
-
-    def loadTable(self):
-        self.userGraphic
-        self.tableWidget.setRowCount(0)
-        df = analisis.loadTable()[['USERNAME','TABLE_SPACE', 'TABLE_NAME', 'SEG_OWNER', 'OPERATION', 'SQL_', 'SQL_1', 'DATE_', 'TIME_']].values
-        for row_number, row_data in enumerate (df):
-            self.tableWidget.insertRow(row_number)
-            for col_number, a in enumerate (row_data):   
-                self.tableWidget.setItem(row_number,col_number,QtWidgets.QTableWidgetItem(str(a)))
-         
-    def about(self):            
-         msg = QMessageBox(self.centralwidget)
-         msg.setText("Welcome to DB_Patterns")
-         msg.setInformativeText("This is a educational project created by Roger Amador and Adrian Prendas")
-         msg.setWindowTitle("DB_Patterns")
-         msg.exec_() 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1088, 585)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("GUI/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setAnimated(False)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -85,12 +46,8 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.filter, 0, 0, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         self.gridLayout_2.addItem(spacerItem, 2, 5, 1, 1)
-        self.label = QtWidgets.QLabel(self.groupBox)
-        self.label.setObjectName("label")
-        self.gridLayout_2.addWidget(self.label, 0, 3, 1, 1)
         self.loadButton = QtWidgets.QPushButton(self.groupBox)
         self.loadButton.setObjectName("loadButton")
-        self.loadButton.clicked.connect(self.loadTable)
         self.gridLayout_2.addWidget(self.loadButton, 3, 0, 1, 1)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout_2.addItem(spacerItem1, 2, 4, 1, 1)
@@ -210,6 +167,9 @@ class Ui_MainWindow(object):
         item.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(8, item)
         self.gridLayout_2.addWidget(self.tableWidget, 1, 0, 2, 3)
+        self.label = QtWidgets.QLabel(self.groupBox)
+        self.label.setObjectName("label")
+        self.gridLayout_2.addWidget(self.label, 0, 3, 1, 1)
         self.gridLayout.addWidget(self.groupBox, 0, 0, 1, 1)
         self.verticalLayout_3.addLayout(self.gridLayout)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -223,7 +183,6 @@ class Ui_MainWindow(object):
         self.menuHelp = QtWidgets.QMenu(self.menuBar)
         self.menuHelp.setObjectName("menuHelp")
         MainWindow.setMenuBar(self.menuBar)
-
         self.actionNew = QtWidgets.QAction(MainWindow)
         self.actionNew.setObjectName("actionNew")
         self.actionRecent = QtWidgets.QAction(MainWindow)
@@ -297,7 +256,6 @@ class Ui_MainWindow(object):
         self.chooser.setItemText(6, _translate("MainWindow", "DATE"))
         self.chooser.setItemText(7, _translate("MainWindow", "TIME"))
         self.chooser.setItemText(8, _translate("MainWindow", "COMMIT"))
-        self.label.setText(_translate("MainWindow", "    Graphics"))
         self.loadButton.setText(_translate("MainWindow", "Load data"))
         self.graphics.setTabText(self.graphics.indexOf(self.tab_user), _translate("MainWindow", "USER"))
         self.graphics.setTabText(self.graphics.indexOf(self.tab_tbs_name), _translate("MainWindow", "TABLESPACE"))
@@ -324,6 +282,7 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "DATE"))
         item = self.tableWidget.horizontalHeaderItem(8)
         item.setText(_translate("MainWindow", "TIME"))
+        self.label.setText(_translate("MainWindow", "    Graphics"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuEdit.setTitle(_translate("MainWindow", "Edit"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
@@ -344,6 +303,8 @@ class Ui_MainWindow(object):
         self.actionCut.setText(_translate("MainWindow", "Cut"))
         self.actionSelect_all.setText(_translate("MainWindow", "Select all"))
         self.actionToolbar.setText(_translate("MainWindow", "Toolbar"))
+        self.actionSteps.setText(_translate("MainWindow", "StepByStep"))
+
 
 if __name__ == "__main__":
     import sys
