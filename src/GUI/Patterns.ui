@@ -79,11 +79,6 @@
              <string>TIME</string>
             </property>
            </item>
-           <item>
-            <property name="text">
-             <string>COMMIT</string>
-            </property>
-           </item>
           </widget>
          </item>
          <item row="0" column="0">
@@ -136,6 +131,9 @@
              <bold>true</bold>
             </font>
            </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
            <property name="currentIndex">
             <number>0</number>
            </property>
@@ -143,14 +141,23 @@
             <attribute name="title">
              <string>USER</string>
             </attribute>
-            <widget class="QWidget" name="userWidget" native="true">
+            <widget class="QLabel" name="userLabel">
              <property name="geometry">
               <rect>
-               <x>-1</x>
-               <y>-1</y>
-               <width>441</width>
+               <x>-4</x>
+               <y>2</y>
+               <width>471</width>
                <height>381</height>
               </rect>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap>../Graphics/user.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </widget>
@@ -167,6 +174,25 @@
                <height>381</height>
               </rect>
              </property>
+             <widget class="QLabel" name="tbsLabel">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>451</width>
+                <height>381</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>../Graphics/tbs.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
             </widget>
            </widget>
            <widget class="QWidget" name="tab_tb_name">
@@ -182,6 +208,25 @@
                <height>381</height>
               </rect>
              </property>
+             <widget class="QLabel" name="tbLabel">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>441</width>
+                <height>381</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap>../Graphics/table.png</pixmap>
+              </property>
+              <property name="scaledContents">
+               <bool>true</bool>
+              </property>
+             </widget>
             </widget>
            </widget>
            <widget class="QWidget" name="tab_owner">
@@ -197,6 +242,19 @@
                <height>381</height>
               </rect>
              </property>
+             <widget class="QLabel" name="segLabel">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>441</width>
+                <height>381</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
             </widget>
            </widget>
            <widget class="QWidget" name="tab_operation">
@@ -212,6 +270,19 @@
                <height>381</height>
               </rect>
              </property>
+             <widget class="QLabel" name="opLabel">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>451</width>
+                <height>381</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
             </widget>
            </widget>
            <widget class="QWidget" name="tab_date">
@@ -227,6 +298,19 @@
                <height>381</height>
               </rect>
              </property>
+             <widget class="QLabel" name="dateLabel">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>451</width>
+                <height>381</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
             </widget>
            </widget>
            <widget class="QWidget" name="tab_time">
@@ -242,6 +326,19 @@
                <height>381</height>
               </rect>
              </property>
+             <widget class="QLabel" name="timeLabel">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>451</width>
+                <height>381</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
             </widget>
            </widget>
           </widget>
@@ -385,14 +482,10 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Init</string>
     </property>
-    <addaction name="actionNew_tab"/>
-    <addaction name="actionNew"/>
-    <addaction name="actionOpen"/>
-    <addaction name="actionRecent"/>
-    <addaction name="actionSave"/>
-    <addaction name="actionSave_As"/>
+    <addaction name="actionConnect"/>
+    <addaction name="actionExport"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -405,7 +498,6 @@
     <addaction name="actionDelete"/>
     <addaction name="actionRedo"/>
     <addaction name="actionUndo"/>
-    <addaction name="actionSelect_all"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -417,9 +509,9 @@
    <addaction name="menuEdit"/>
    <addaction name="menuHelp"/>
   </widget>
-  <action name="actionNew">
+  <action name="actionExport">
    <property name="text">
-    <string>New</string>
+    <string> Export data</string>
    </property>
   </action>
   <action name="actionRecent">
@@ -462,9 +554,12 @@
     <string>Open...</string>
    </property>
   </action>
-  <action name="actionNew_tab">
+  <action name="actionConnect">
    <property name="text">
-    <string>New tab</string>
+    <string>Connect to DB</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WindowShortcut</enum>
    </property>
   </action>
   <action name="actionSave">

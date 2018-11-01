@@ -13,11 +13,9 @@ class Ui_ConnectDB(object):
         ConnectDB.setObjectName("ConnectDB")
         ConnectDB.setWindowModality(QtCore.Qt.WindowModal)
         ConnectDB.resize(333, 373)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("GUI/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        ConnectDB.setWindowIcon(icon)
-        self.grid = QtWidgets.QGridLayout(ConnectDB)
-        self.grid.setObjectName("grid")
+        ConnectDB.setModal(True)
+        self.0 = QtWidgets.QGridLayout(ConnectDB)
+        self.0.setObjectName("0")
         self.gridLayout = QtWidgets.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
         self.message = QtWidgets.QLabel(ConnectDB)
@@ -61,7 +59,7 @@ class Ui_ConnectDB(object):
         self.label_5 = QtWidgets.QLabel(ConnectDB)
         self.label_5.setObjectName("label_5")
         self.gridLayout.addWidget(self.label_5, 5, 0, 1, 1)
-        self.grid.addLayout(self.gridLayout, 0, 1, 1, 1)
+        self.0.addLayout(self.gridLayout, 0, 1, 1, 1)
 
         self.retranslateUi(ConnectDB)
         QtCore.QMetaObject.connectSlotsByName(ConnectDB)
@@ -87,3 +85,4 @@ if __name__ == "__main__":
     ui.setupUi(ConnectDB)
     ConnectDB.show()
     sys.exit(app.exec_())
+

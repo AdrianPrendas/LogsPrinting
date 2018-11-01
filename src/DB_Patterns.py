@@ -5,49 +5,167 @@
 # Created by: PyQt5 UI code generator 5.11.3
 #
 # WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore
+from PyQt5.QtWidgets import QWidget, QPushButton, QMessageBox
 import os, sys
 import connection as window_conect
 import analisis as analisis
+import pandas as pd
+from pandas import ExcelWriter
+import matplotlib.pyplot as plt
+import PIL
+from PIL import Image
 
 class Ui_MainWindow(object):
+    flag = False
+    #Main functions
     def userGraphic(self):
-        self.userWidget.setPixmap(analisis.userGraphic()) 
+       fig = plt.figure()
+       ax = analisis.userGraphic()
+       plt.title('Users Graphic')
+       fig.savefig('Graphics/user.png')
+       pixmap = QtGui.QPixmap('Graphics/user.png')
+       pixmap.scaled(self.userLabel.geometry().width(),self.userLabel.geometry().height(),QtCore.Qt.KeepAspectRatio)
+       self.userLabel.setPixmap(pixmap)
+       self.userLabel.setScaledContents(True)
         
     def tableGraphic(self):
-        self.tableWidget.setPixmap(analisis.tableGraphic())   
+       fig = plt.figure()
+       ax = analisis.tableGraphic()
+       plt.title('Table Graphic')
+       fig.savefig('Graphics/table.png')
+       pixmap = QtGui.QPixmap('Graphics/table.png')
+       pixmap.scaled(self.tbLabel.geometry().width(),self.tbLabel.geometry().height(),QtCore.Qt.IgnoreAspectRatio)
+       self.tbLabel.setPixmap(pixmap)   
+       self.tbLabel.setScaledContents(True)
 
     def tablespaceGraphic(self):
-        self.tbsWidget.setPixmap(analisis.tablespaceGraphic())  
+        fig = plt.figure()
+        ax = analisis.tablespaceGraphic()
+        plt.title('Tablespace Graphic')
+        fig.savefig('Graphics/tbs.png')
+        pixmap = QtGui.QPixmap('Graphics/tbs.png')
+        pixmap.scaled(self.tbsLabel.geometry().width(),self.tbsLabel.geometry().height(),QtCore.Qt.IgnoreAspectRatio)
+        self.tbsLabel.setPixmap(pixmap)  
+        self.tbsLabel.setScaledContents(True)
+    
+    def segOwnerGraphic(self):
+        fig = plt.figure()
+        ax = analisis.segOwnerGraphic()
+        plt.title('Segment owner Graphic')
+        fig.savefig('Graphics/segOw.png')
+        pixmap = QtGui.QPixmap('Graphics/segOw.png')
+        pixmap.scaled(self.segLabel.geometry().width(),self.segLabel.geometry().height(),QtCore.Qt.KeepAspectRatio)
+        self.segLabel.setPixmap(pixmap)  
+        self.segLabel.setScaledContents(True)
 
     def operationGraphic(self):
-        self.operationWidget.setPixmap(analisis.operationGraphic())
+        fig = plt.figure()
+        ax = analisis.operationGraphic()
+        plt.title('Operation Graphic')
+        fig.savefig('Graphics/operation.png')
+        pixmap = QtGui.QPixmap('Graphics/operation.png')
+        pixmap.scaled(self.opLabel.geometry().width(),self.opLabel.geometry().height(),QtCore.Qt.IgnoreAspectRatio)
+        self.opLabel.setPixmap(pixmap)
+        self.opLabel.setScaledContents(True)
 
     def dateGraphic(self):
-        self.dateWidget.setPixelmap(analisis.dateGraphic())
+        fig = plt.figure()
+        ax = analisis.dateGraphic()
+        plt.title('Date Graphic')
+        ax.legend()
+        fig.savefig('Graphics/date.png')
+        pixmap = QtGui.QPixmap('Graphics/date.png')
+        pixmap.scaled(self.dateLabel.geometry().width(),self.dateLabel.geometry().height(),QtCore.Qt.IgnoreAspectRatio)
+        self.dateLabel.setPixmap(pixmap)
+        self.dateLabel.setScaledContents(True)
 
     def timeGraphic(self):
-        self.timeWidget.setPixelmap(analisis.timeGraphic())    
+        fig = plt.figure()
+        ax = analisis.timeGraphic()
+        plt.title('Date Graphic')
+        fig.savefig('Graphics/time.png')
+        pixmap = QtGui.QPixmap('Graphics/time.png')
+        pixmap.scaled(self.timeLabel.geometry().width(),self.timeLabel.geometry().height(),QtCore.Qt.IgnoreAspectRatio)
+        self.timeLabel.setPixmap(pixmap)    
+        self.timeLabel.setScaledContents(True)
 
     def loadTable(self):
-        self.userGraphic
+        self.flag = True
+        self.userGraphic()
+        self.tablespaceGraphic()
+        self.tableGraphic()
+        self.segOwnerGraphic()
+        self.dateGraphic()
+        self.operationGraphic()
+        self.timeGraphic()
         self.tableWidget.setRowCount(0)
         df = analisis.loadTable()[['USERNAME','TABLE_SPACE', 'TABLE_NAME', 'SEG_OWNER', 'OPERATION', 'SQL_', 'SQL_1', 'DATE_', 'TIME_']].values
         for row_number, row_data in enumerate (df):
             self.tableWidget.insertRow(row_number)
             for col_number, a in enumerate (row_data):   
                 self.tableWidget.setItem(row_number,col_number,QtWidgets.QTableWidgetItem(str(a)))
-         
+        
+     #-- Tools --
+    def Undo(self):
+       self.search.undo()
+
+    def Delete(self):
+       self.search.clear()
+
+    def Redo(self):
+       self.search.redo()
+ 
+    def Cut(self):
+       self.search.cut()
+ 
+    def Copy(self):
+       self.search.copy()
+ 
+    def Paste(self):
+       self.search.paste()
+    
+    def delete(self):
+        self.search.setText('')
+
     def about(self):            
          msg = QMessageBox(self.centralwidget)
          msg.setText("Welcome to DB_Patterns")
-         msg.setInformativeText("This is a educational project created by Roger Amador and Adrian Prendas")
+         msg.setInformativeText("This is an educational project created by Roger Amador and Adrian Prendas \n Powered by Oracle")
          msg.setWindowTitle("DB_Patterns")
          msg.exec_() 
+    
+    def connectDB(self):            
+        return 0
+
+
+    def saveData(self):
+        data = analisis.loadTable()
+        if data.empty == False and self.flag==True:
+            path = QFileDialog.getSaveFileName(self.menuFile, 'Save As', os.getenv('HOME'), 'Libro Excel(*.xlsx)')    
+            try:
+              writer = ExcelWriter(path[0])
+              data.to_excel(writer,'Historial de registros',index=False)
+              print(path)
+              writer.save()
+            except Exception as error:
+                self.flag = False
+                raise Exception("There was an error saving the file: ".format(error))
+        else:
+            self.flag = False
+            msg = QMessageBox(self.centralwidget)
+            msg.setText("You cannot save an empty table")
+            msg.setInformativeText("Please generate some data before saving")
+            msg.setWindowTitle("Warning!")
+            msg.exec_() 
+
+
+    def exitApp(self):
+        sys.exit()    
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1088, 585)
@@ -78,7 +196,6 @@ class Ui_MainWindow(object):
         self.chooser.addItem("")
         self.chooser.addItem("")
         self.chooser.addItem("")
-        self.chooser.addItem("")
         self.gridLayout_2.addWidget(self.chooser, 0, 1, 1, 1)
         self.filter = QtWidgets.QLineEdit(self.groupBox)
         self.filter.setObjectName("filter")
@@ -99,48 +216,74 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.graphics.setFont(font)
+        self.graphics.setAutoFillBackground(False)
         self.graphics.setObjectName("graphics")
         self.tab_user = QtWidgets.QWidget()
         self.tab_user.setObjectName("tab_user")
-        self.userWidget = QtWidgets.QWidget(self.tab_user)
-        self.userWidget.setGeometry(QtCore.QRect(-1, -1, 441, 381))
-        self.userWidget.setObjectName("userWidget")
+        self.userLabel = QtWidgets.QLabel(self.tab_user)
+        self.userLabel.setGeometry(QtCore.QRect(-4, 2, 461, 381))
+        self.userLabel.setText("")
+        self.userLabel.setObjectName("userLabel")
         self.graphics.addTab(self.tab_user, "")
         self.tab_tbs_name = QtWidgets.QWidget()
         self.tab_tbs_name.setObjectName("tab_tbs_name")
         self.tbsWidget = QtWidgets.QWidget(self.tab_tbs_name)
-        self.tbsWidget.setGeometry(QtCore.QRect(-1, -1, 441, 381))
+        self.tbsWidget.setGeometry(QtCore.QRect(-1, -1, 461, 381))
         self.tbsWidget.setObjectName("tbsWidget")
+        self.tbsLabel = QtWidgets.QLabel(self.tbsWidget)
+        self.tbsLabel.setGeometry(QtCore.QRect(0, 10, 461, 381))
+        self.tbsLabel.setText("")
+        self.tbsLabel.setObjectName("tbsLabel")
         self.graphics.addTab(self.tab_tbs_name, "")
         self.tab_tb_name = QtWidgets.QWidget()
         self.tab_tb_name.setObjectName("tab_tb_name")
         self.tableWidget_2 = QtWidgets.QWidget(self.tab_tb_name)
-        self.tableWidget_2.setGeometry(QtCore.QRect(0, 0, 441, 381))
+        self.tableWidget_2.setGeometry(QtCore.QRect(0, 0, 461, 381))
         self.tableWidget_2.setObjectName("tableWidget_2")
+        self.tbLabel = QtWidgets.QLabel(self.tableWidget_2)
+        self.tbLabel.setGeometry(QtCore.QRect(0, 0, 461, 381))
+        self.tbLabel.setText("")
+        self.tbLabel.setObjectName("tbLabel")
         self.graphics.addTab(self.tab_tb_name, "")
         self.tab_owner = QtWidgets.QWidget()
         self.tab_owner.setObjectName("tab_owner")
         self.ownerWidget = QtWidgets.QWidget(self.tab_owner)
-        self.ownerWidget.setGeometry(QtCore.QRect(0, 0, 441, 381))
+        self.ownerWidget.setGeometry(QtCore.QRect(0, 0, 461, 381))
         self.ownerWidget.setObjectName("ownerWidget")
+        self.segLabel = QtWidgets.QLabel(self.ownerWidget)
+        self.segLabel.setGeometry(QtCore.QRect(0, 0, 461, 381))
+        self.segLabel.setText("")
+        self.segLabel.setObjectName("segLabel")
         self.graphics.addTab(self.tab_owner, "")
         self.tab_operation = QtWidgets.QWidget()
         self.tab_operation.setObjectName("tab_operation")
         self.operationWidget = QtWidgets.QWidget(self.tab_operation)
-        self.operationWidget.setGeometry(QtCore.QRect(0, 0, 441, 381))
+        self.operationWidget.setGeometry(QtCore.QRect(0, 0, 461, 381))
         self.operationWidget.setObjectName("operationWidget")
+        self.opLabel = QtWidgets.QLabel(self.operationWidget)
+        self.opLabel.setGeometry(QtCore.QRect(0, 0, 461, 381))
+        self.opLabel.setText("")
+        self.opLabel.setObjectName("opLabel")
         self.graphics.addTab(self.tab_operation, "")
         self.tab_date = QtWidgets.QWidget()
         self.tab_date.setObjectName("tab_date")
         self.dateWidget = QtWidgets.QWidget(self.tab_date)
-        self.dateWidget.setGeometry(QtCore.QRect(0, 0, 441, 381))
+        self.dateWidget.setGeometry(QtCore.QRect(0, 0, 461, 381))
         self.dateWidget.setObjectName("dateWidget")
+        self.dateLabel = QtWidgets.QLabel(self.dateWidget)
+        self.dateLabel.setGeometry(QtCore.QRect(0, 0, 461, 381))
+        self.dateLabel.setText("")
+        self.dateLabel.setObjectName("dateLabel")
         self.graphics.addTab(self.tab_date, "")
         self.tab_time = QtWidgets.QWidget()
         self.tab_time.setObjectName("tab_time")
         self.timeWidget = QtWidgets.QWidget(self.tab_time)
-        self.timeWidget.setGeometry(QtCore.QRect(0, 0, 441, 381))
+        self.timeWidget.setGeometry(QtCore.QRect(0, 0, 461, 381))
         self.timeWidget.setObjectName("timeWidget")
+        self.timeLabel = QtWidgets.QLabel(self.timeWidget)
+        self.timeLabel.setGeometry(QtCore.QRect(0, 0, 461, 381))
+        self.timeLabel.setText("")
+        self.timeLabel.setObjectName("timeLabel")
         self.graphics.addTab(self.tab_time, "")
         self.gridLayout_2.addWidget(self.graphics, 1, 3, 1, 3)
         self.tableWidget = QtWidgets.QTableWidget(self.groupBox)
@@ -224,48 +367,57 @@ class Ui_MainWindow(object):
         self.menuHelp.setObjectName("menuHelp")
         MainWindow.setMenuBar(self.menuBar)
 
-        self.actionNew = QtWidgets.QAction(MainWindow)
-        self.actionNew.setObjectName("actionNew")
-        self.actionRecent = QtWidgets.QAction(MainWindow)
-        self.actionRecent.setObjectName("actionRecent")
+        self.actionExport = QtWidgets.QAction(MainWindow)
+        self.actionExport.setObjectName("actionExport")
+        self.actionExport.setShortcut("Ctrl+S")
+        self.actionExport.triggered.connect(self.saveData)
+        
+
         self.actionExit = QtWidgets.QAction(MainWindow)
         self.actionExit.setObjectName("actionExit")
+        self.actionExit.setShortcut("Ctrl+E")
+        self.actionExit.triggered.connect(self.exitApp)
+
         self.actionCopy = QtWidgets.QAction(MainWindow)
         self.actionCopy.setObjectName("actionCopy")
+        self.actionCopy.setShortcut("Ctrl+C")
+        self.actionCopy.triggered.connect(self.Copy)
+
         self.actionPaste = QtWidgets.QAction(MainWindow)
         self.actionPaste.setObjectName("actionPaste")
+        self.actionPaste.setShortcut("Ctrl+P")
+        self.actionPaste.triggered.connect(self.Paste)
+
         self.actionDelete = QtWidgets.QAction(MainWindow)
         self.actionDelete.setObjectName("actionDelete")
+        self.actionDelete.setShortcut("Ctrl+B")
+        self.actionDelete.triggered.connect(self.delete)
+
         self.actionRedo = QtWidgets.QAction(MainWindow)
         self.actionRedo.setObjectName("actionRedo")
+        self.actionRedo.setShortcut("Ctrl+Y")
+        self.actionRedo.triggered.connect(self.Redo)
+
         self.actionUndo = QtWidgets.QAction(MainWindow)
         self.actionUndo.setObjectName("actionUndo")
-        self.actionOpen = QtWidgets.QAction(MainWindow)
-        self.actionOpen.setObjectName("actionOpen")
-        self.actionNew_tab = QtWidgets.QAction(MainWindow)
-        self.actionNew_tab.setObjectName("actionNew_tab")
-        self.actionSave = QtWidgets.QAction(MainWindow)
-        self.actionSave.setObjectName("actionSave")
-        self.actionSave_As = QtWidgets.QAction(MainWindow)
-        self.actionSave_As.setObjectName("actionSave_As")
-        self.actionRun = QtWidgets.QAction(MainWindow)
-        self.actionRun.setObjectName("actionRun")
+        self.actionUndo.setShortcut("Ctrl+Z")
+        self.actionUndo.triggered.connect(self.Undo)
+
+        self.actionConnect = QtWidgets.QAction(MainWindow)
+        self.actionConnect.setObjectName("actionConnect")
+        self.actionConnect.setShortcut("Ctrl+Q")
+        self.actionConnect.triggered.connect(self.connectDB)
+
+      
         self.actionAbout = QtWidgets.QAction(MainWindow)
         self.actionAbout.setObjectName("actionAbout")
+        self.actionAbout.triggered.connect(self.about)
+
         self.actionCut = QtWidgets.QAction(MainWindow)
         self.actionCut.setObjectName("actionCut")
-        self.actionSelect_all = QtWidgets.QAction(MainWindow)
-        self.actionSelect_all.setObjectName("actionSelect_all")
-        self.actionToolbar = QtWidgets.QAction(MainWindow)
-        self.actionToolbar.setObjectName("actionToolbar")
-        self.actionSteps = QtWidgets.QAction(MainWindow)
-        self.actionSteps.setObjectName("actionSteps")
-        self.menuFile.addAction(self.actionNew_tab)
-        self.menuFile.addAction(self.actionNew)
-        self.menuFile.addAction(self.actionOpen)
-        self.menuFile.addAction(self.actionRecent)
-        self.menuFile.addAction(self.actionSave)
-        self.menuFile.addAction(self.actionSave_As)
+
+        self.menuFile.addAction(self.actionConnect)
+        self.menuFile.addAction(self.actionExport)
         self.menuFile.addAction(self.actionExit)
         self.menuEdit.addAction(self.actionCopy)
         self.menuEdit.addAction(self.actionCut)
@@ -273,7 +425,6 @@ class Ui_MainWindow(object):
         self.menuEdit.addAction(self.actionDelete)
         self.menuEdit.addAction(self.actionRedo)
         self.menuEdit.addAction(self.actionUndo)
-        self.menuEdit.addAction(self.actionSelect_all)
         self.menuHelp.addAction(self.actionAbout)
         self.menuBar.addAction(self.menuFile.menuAction())
         self.menuBar.addAction(self.menuEdit.menuAction())
@@ -296,7 +447,6 @@ class Ui_MainWindow(object):
         self.chooser.setItemText(5, _translate("MainWindow", "OPERATION"))
         self.chooser.setItemText(6, _translate("MainWindow", "DATE"))
         self.chooser.setItemText(7, _translate("MainWindow", "TIME"))
-        self.chooser.setItemText(8, _translate("MainWindow", "COMMIT"))
         self.label.setText(_translate("MainWindow", "    Graphics"))
         self.loadButton.setText(_translate("MainWindow", "Load data"))
         self.graphics.setTabText(self.graphics.indexOf(self.tab_user), _translate("MainWindow", "USER"))
@@ -324,26 +474,19 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "DATE"))
         item = self.tableWidget.horizontalHeaderItem(8)
         item.setText(_translate("MainWindow", "TIME"))
-        self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.menuFile.setTitle(_translate("MainWindow", "Init"))
         self.menuEdit.setTitle(_translate("MainWindow", "Edit"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
-        self.actionNew.setText(_translate("MainWindow", "New"))
-        self.actionRecent.setText(_translate("MainWindow", "Open Recent"))
+        self.actionExport.setText(_translate("MainWindow", " Export data"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
         self.actionCopy.setText(_translate("MainWindow", "Copy"))
         self.actionPaste.setText(_translate("MainWindow", "Paste"))
         self.actionDelete.setText(_translate("MainWindow", "Delete"))
         self.actionRedo.setText(_translate("MainWindow", "Redo"))
         self.actionUndo.setText(_translate("MainWindow", "Undo"))
-        self.actionOpen.setText(_translate("MainWindow", "Open..."))
-        self.actionNew_tab.setText(_translate("MainWindow", "New tab"))
-        self.actionSave.setText(_translate("MainWindow", "Save"))
-        self.actionSave_As.setText(_translate("MainWindow", "Save As"))
-        self.actionRun.setText(_translate("MainWindow", "Run"))
+        self.actionConnect.setText(_translate("MainWindow", "Connect to DB"))
         self.actionAbout.setText(_translate("MainWindow", "About"))
         self.actionCut.setText(_translate("MainWindow", "Cut"))
-        self.actionSelect_all.setText(_translate("MainWindow", "Select all"))
-        self.actionToolbar.setText(_translate("MainWindow", "Toolbar"))
 
 if __name__ == "__main__":
     import sys
