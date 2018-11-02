@@ -92,6 +92,48 @@ class Ui_MainWindow(object):
         pixmap.scaled(self.timeLabel.geometry().width(),self.timeLabel.geometry().height(),QtCore.Qt.IgnoreAspectRatio)
         self.timeLabel.setPixmap(pixmap)    
         self.timeLabel.setScaledContents(True)
+    
+    def formatTable(self):
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        item1 = QtWidgets.QTableWidgetItem()
+        item1.setText("USERNAME")
+        item1.setFont(font)
+        item2 = QtWidgets.QTableWidgetItem()
+        item2.setText("TABLESPACE")
+        item2.setFont(font)
+        item3 = QtWidgets.QTableWidgetItem()
+        item3.setText("TABLE")
+        item3.setFont(font)
+        item4 = QtWidgets.QTableWidgetItem()
+        item4.setText("SEG_OWNER")
+        item4.setFont(font)
+        item5 = QtWidgets.QTableWidgetItem()
+        item5.setText("OPERATION")
+        item5.setFont(font)
+        item6 = QtWidgets.QTableWidgetItem()
+        item6.setText("SQL")
+        item6.setFont(font)
+        item7 = QtWidgets.QTableWidgetItem()
+        item7.setText("SQL-1")
+        item7.setFont(font)
+        item8 = QtWidgets.QTableWidgetItem()
+        item8.setText("DATE")
+        item8.setFont(font)
+        item9 = QtWidgets.QTableWidgetItem()
+        item9.setText("TIME")
+        item9.setFont(font)
+        self.tableWidget.setHorizontalHeaderItem(0, item1)
+        self.tableWidget.setHorizontalHeaderItem(1, item2)
+        self.tableWidget.setHorizontalHeaderItem(2, item3)
+        self.tableWidget.setHorizontalHeaderItem(3, item4)
+        self.tableWidget.setHorizontalHeaderItem(4, item5)
+        self.tableWidget.setHorizontalHeaderItem(5, item6)
+        self.tableWidget.setHorizontalHeaderItem(6, item7)
+        self.tableWidget.setHorizontalHeaderItem(7, item8)
+        self.tableWidget.setHorizontalHeaderItem(8, item9)
 
     def loadTable(self):
         self.flag = True
@@ -103,33 +145,133 @@ class Ui_MainWindow(object):
         self.operationGraphic()
         self.timeGraphic()
         self.tableWidget.setRowCount(0)
-        df = analisis.loadTable()[['USERNAME','TABLE_SPACE', 'TABLE_NAME', 'SEG_OWNER', 'OPERATION', 'SQL_', 'SQL_1', 'DATE_', 'TIME_']].values
-        for row_number, row_data in enumerate (df):
-            self.tableWidget.insertRow(row_number)
-            for col_number, a in enumerate (row_data):   
-                self.tableWidget.setItem(row_number,col_number,QtWidgets.QTableWidgetItem(str(a)))
+        data = analisis.loadTable() 
+        if  len(data)>0:
+            self.tableWidget.clear()
+            self.formatTable()
+            df = data[['USERNAME','TABLE_SPACE', 'TABLE_NAME', 'SEG_OWNER', 'OPERATION', 'SQL_', 'SQL_1', 'DATE_', 'TIME_']].values
+            for row_number, row_data in enumerate (df):
+                self.tableWidget.insertRow(row_number)
+                for col_number, a in enumerate (row_data):   
+                    self.tableWidget.setItem(row_number,col_number,QtWidgets.QTableWidgetItem(str(a)))
+        else:
+            msg = QMessageBox(self.centralwidget)
+            msg.setText("NO DATA REGISTER INTO DB LOGFILES")
+            msg.setInformativeText("DATA NOT FOUND! , please change the logfiles selected")
+            msg.setWindowTitle("Warning!")
+            msg.exec_()  
+    
+    def filterGeneral(self):
+        print('gen')
+        return analisis.loadTable()
         
+
+    def filterUser(self):
+        text = self.filter.text()
+        text = text.upper() 
+        print('user')
+        return analisis.filterUser(text)
+
+
+    def filterTable(self):
+        text = self.filter.text()
+        text = text.upper() 
+        print('tb')
+        return analisis.filterTable(text)
+
+    def filterTBS(self):
+        text = self.filter.text()
+        text = text.upper() 
+        print('tbs')
+        return analisis.filterTableSpace(text)
+
+    def filterSEGOW(self):
+        text = self.filter.text()
+        text = text.upper() 
+        print('segow')
+        return analisis.filterSegOw(text) 
+
+    def filterOP(self):
+        text = self.filter.text()
+        text = text.upper()
+        print('op')
+        return analisis.filterOperation(text) 
+
+    def filterDate(self):
+        text = self.filter.text()
+        text = text.upper()
+        print('date')
+        return analisis.filterDate(text)  
+
+    def filterTime(self):
+        text = self.filter.text()
+        text = text.upper()
+        print('time') 
+        return analisis.filterTime(text)   
+    
+    def switcherFilters(self,x):
+        if x == 'GENERAL':
+            return self.filterGeneral()
+        elif x == 'USER_NAME':
+            return self.filterUser()
+        elif x == 'TABLE_NAME':    
+            return self.filterTable()
+        elif x == 'TABLESPACE_NAME':  
+            return self.filterTBS()
+        elif x == 'SEG_OWNER':
+            return self.filterSEGOW()
+        elif x == 'OPERATION':
+            return self.filterOP()
+        elif x == 'DATE': 
+            return self.filterDate()
+        elif x == 'TIME':
+            return self.filterTime()
+        else:
+            return self.filterGeneral()  
+          
+    def loadFilters(self):
+        text = self.filter.text()
+        print(self.chooser.currentText())
+        data = self.switcherFilters(self.chooser.currentText()) 
+        if self.chooser.currentText() == 'GENERAL':
+           self.loadTable()
+           return 0    
+        elif len(text) > 0 and len(data) > 0:
+            self.tableWidget.clear()
+            self.formatTable()
+            df = data[['USERNAME','TABLE_SPACE', 'TABLE_NAME', 'SEG_OWNER', 'OPERATION', 'SQL_', 'SQL_1', 'DATE_', 'TIME_']].values    
+            for row_number, row_data in enumerate (df):
+                self.tableWidget.insertRow(row_number)
+                for col_number, a in enumerate (row_data):  
+                    self.tableWidget.setItem(row_number,col_number,QtWidgets.QTableWidgetItem(str(a)))       
+        else:
+            msg = QMessageBox(self.centralwidget)
+            msg.setText("DATA NOT REGISTER INTO DB LOGFILES")
+            msg.setInformativeText("Data not found, please enter a valid data")
+            msg.setWindowTitle("Warning!")
+            msg.exec_()  
+
      #-- Tools --
     def Undo(self):
-       self.search.undo()
+       self.filter.undo()
 
     def Delete(self):
-       self.search.clear()
+       self.filter.clear()
 
     def Redo(self):
-       self.search.redo()
+       self.filter.redo()
  
     def Cut(self):
-       self.search.cut()
+       self.filter.cut()
  
     def Copy(self):
-       self.search.copy()
+       self.filter.copy()
  
     def Paste(self):
-       self.search.paste()
+       self.filter.paste()
     
     def delete(self):
-        self.search.setText('')
+        self.filter.setText('')
 
     def about(self):            
          msg = QMessageBox(self.centralwidget)
@@ -143,7 +285,10 @@ class Ui_MainWindow(object):
 
 
     def saveData(self):
-        data = analisis.loadTable()
+        if self.chooser.currentText() == 'GENERAL':
+           data = analisis.loadTable() 
+        else:
+           data = self.switcherFilters(self.chooser.currentText()) 
         if data.empty == False and self.flag==True:
             path = QFileDialog.getSaveFileName(self.menuFile, 'Save As', os.getenv('HOME'), 'Libro Excel(*.xlsx)')    
             try:
@@ -185,6 +330,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.search = QtWidgets.QPushButton(self.groupBox)
         self.search.setObjectName("search")
+        self.search.clicked.connect(self.loadFilters)
         self.gridLayout_2.addWidget(self.search, 0, 2, 1, 1)
         self.chooser = QtWidgets.QComboBox(self.groupBox)
         self.chooser.setObjectName("chooser")
@@ -352,6 +498,12 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         item.setFont(font)
         self.tableWidget.setHorizontalHeaderItem(8, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
         self.gridLayout_2.addWidget(self.tableWidget, 1, 0, 2, 3)
         self.gridLayout.addWidget(self.groupBox, 0, 0, 1, 1)
         self.verticalLayout_3.addLayout(self.gridLayout)
@@ -390,8 +542,8 @@ class Ui_MainWindow(object):
 
         self.actionDelete = QtWidgets.QAction(MainWindow)
         self.actionDelete.setObjectName("actionDelete")
-        self.actionDelete.setShortcut("Ctrl+B")
-        self.actionDelete.triggered.connect(self.delete)
+        self.actionDelete.setShortcut("Ctrl+Supr")
+        self.actionDelete.triggered.connect(self.Delete)
 
         self.actionRedo = QtWidgets.QAction(MainWindow)
         self.actionRedo.setObjectName("actionRedo")
@@ -415,6 +567,8 @@ class Ui_MainWindow(object):
 
         self.actionCut = QtWidgets.QAction(MainWindow)
         self.actionCut.setObjectName("actionCut")
+        self.actionCut.setShortcut("Ctrl+X")
+        self.actionCut.triggered.connect(self.Cut)
 
         self.menuFile.addAction(self.actionConnect)
         self.menuFile.addAction(self.actionExport)
@@ -457,7 +611,7 @@ class Ui_MainWindow(object):
         self.graphics.setTabText(self.graphics.indexOf(self.tab_date), _translate("MainWindow", "DATE"))
         self.graphics.setTabText(self.graphics.indexOf(self.tab_time), _translate("MainWindow", "TIME"))
         item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "USER_NAME"))
+        item.setText(_translate("MainWindow", "USERNAME"))
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "TABLESPACE"))
         item = self.tableWidget.horizontalHeaderItem(2)
@@ -469,7 +623,7 @@ class Ui_MainWindow(object):
         item = self.tableWidget.horizontalHeaderItem(5)
         item.setText(_translate("MainWindow", "SQL"))
         item = self.tableWidget.horizontalHeaderItem(6)
-        item.setText(_translate("MainWindow", "SQL_-1"))
+        item.setText(_translate("MainWindow", "SQL-1"))
         item = self.tableWidget.horizontalHeaderItem(7)
         item.setText(_translate("MainWindow", "DATE"))
         item = self.tableWidget.horizontalHeaderItem(8)
