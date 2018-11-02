@@ -15,6 +15,55 @@ def loadTable():
     data.head(50000)
     return data
 
+def filterUser(user):
+      data = pd.DataFrame.from_dict(db.exec_dml('''select * from logminerFiltered where username <> 'UNKNOWN' and
+      username <> 'SYS' and table_space <> 'None' and table_space <> 'UNKNOW' and table_name <> 'None' '''))
+      data =  pd.DataFrame.from_dict(data[data['USERNAME'].isin([str(user)])])
+      data.head(50000)
+      return  data
+
+def filterTable(table):
+      data = pd.DataFrame.from_dict(db.exec_dml('''select * from logminerFiltered where username <> 'UNKNOWN' and
+      username <> 'SYS' and table_space <> 'None' and table_space <> 'UNKNOW' and table_name <> 'None' '''))
+      data =  pd.DataFrame.from_dict(data[data['TABLE_NAME'].isin([str(table)])])
+      data.head(50000)
+      return  data
+
+def filterTableSpace(tbs):
+      data = pd.DataFrame.from_dict(db.exec_dml('''select * from logminerFiltered where username <> 'UNKNOWN' and
+      username <> 'SYS' and table_space <> 'None' and table_space <> 'UNKNOW' and table_name <> 'None' '''))
+      data =  pd.DataFrame.from_dict(data[data['TABLE_SPACE'].isin([str(tbs)])])
+      data.head(50000)
+      return  data
+
+def filterOperation(op):
+      data = pd.DataFrame.from_dict(db.exec_dml('''select * from logminerFiltered where username <> 'UNKNOWN' and
+      username <> 'SYS' and table_space <> 'None' and table_space <> 'UNKNOW' and table_name <> 'None' '''))
+      data =  pd.DataFrame.from_dict(data[data['OPERATION'].isin([str(op)])])
+      data.head(50000)
+      return  data
+
+def filterSegOw(ow):
+      data = pd.DataFrame.from_dict(db.exec_dml('''select * from logminerFiltered where username <> 'UNKNOWN' and
+      username <> 'SYS' and table_space <> 'None' and table_space <> 'UNKNOW' and table_name <> 'None' '''))
+      data =  pd.DataFrame.from_dict(data[data['SEG_OWNER'].isin([str(ow)])])
+      data.head(50000)
+      return  data
+
+def filterDate(date):
+      data = pd.DataFrame.from_dict(db.exec_dml('''select * from logminerFiltered where username <> 'UNKNOWN' and
+      username <> 'SYS' and table_space <> 'None' and table_space <> 'UNKNOW' and table_name <> 'None' '''))
+      data =  pd.DataFrame.from_dict(data[data['DATE_'].isin([str(date)])])
+      data.head(50000)
+      return  data
+
+def filterTime(time):
+      data = pd.DataFrame.from_dict(db.exec_dml('''select * from logminerFiltered where username <> 'UNKNOWN' and
+      username <> 'SYS' and table_space <> 'None' and table_space <> 'UNKNOW' and table_name <> 'None' '''))
+      data =  pd.DataFrame.from_dict(data[data['TIME_'].isin([str(time)])])
+      data.head(50000)
+      return  data
+
 def userGraphic():
     data = pd.DataFrame.from_dict(db.exec_dml('''select * from logminerFiltered where username <> 'UNKNOWN' and
     username <> 'SYS' and table_space <> 'None' and table_space <> 'UNKNOW' and table_name <> 'None' '''))
@@ -59,6 +108,9 @@ def timeGraphic():
 
 def isFlag():
     return True
+
+
+
 
 
 
