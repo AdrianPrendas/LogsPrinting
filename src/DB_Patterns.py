@@ -290,15 +290,19 @@ class Ui_MainWindow(object):
         else:
            data = self.switcherFilters(self.chooser.currentText()) 
         if data.empty == False and self.flag==True:
-            path = QFileDialog.getSaveFileName(self.menuFile, 'Save As', os.getenv('HOME'), 'Libro Excel(*.xlsx)')    
-            try:
-              writer = ExcelWriter(path[0])
-              data.to_excel(writer,'Historial de registros',index=False)
-              print(path)
-              writer.save()
-            except Exception as error:
-                self.flag = False
-                raise Exception("There was an error saving the file: ".format(error))
+            path = QFileDialog.getSaveFileName(self.menuFile, 'Save As', os.getenv('HOME'), 'Libro Excel(*.xlsx)') 
+            if  path != ('', ''):    
+                try:
+                    writer = ExcelWriter(path[0])
+                    data.to_excel(writer,'Historial de registros',index=False)
+                    print(path)
+                    writer.save()
+                except Exception as error:
+                    self.flag = False
+                    raise Exception("There was an error saving the file: ".format(error))
+            else: 
+                #QFileDialog.destroy()
+                return None       
         else:
             self.flag = False
             msg = QMessageBox(self.centralwidget)
