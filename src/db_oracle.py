@@ -3,17 +3,17 @@ import cx_Oracle
 
 CONN_INFO = {
     'host': '127.0.0.1',
-    'port': 1521,
+    'port': 1522,
     'user': 'sys',
-    'pass': 'root',
+    'pass': 'manager',
     'service':'GO'
 }
   
 CONN_STR = '{user}/{pass}@{host}:{port}/{service}'.format(**CONN_INFO)
 
 class DB:
-    def __init__(self):
-        self.conn = cx_Oracle.connect(CONN_STR, mode = cx_Oracle.SYSDBA)
+    def __init__(self,config=CONN_STR):
+        self.conn = cx_Oracle.connect(config, mode = cx_Oracle.SYSDBA)
 
     def exec_dml(self, query, params={}):
         cursor = self.conn.cursor()
