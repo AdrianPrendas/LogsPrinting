@@ -71,6 +71,10 @@ Especifique el diccionario de datos
 ![13](https://user-images.githubusercontent.com/20632410/48397119-5baf1b80-e6e2-11e8-85c5-cceaa27aa33c.PNG)
 
 #### En este punto ya se puede consultar la vista, no obstante desde consola es muy dificil apreciar su contenido
+Por lo que se implemento una solucion, ya que esta vista tampoco se puede acceder desde una aplicacion de programa <br>
+sin antes haber ejecutado las instrucciones necesarias para configurar y habilitar el LogMiner, tampoco se podra acceder <br>
+a esta vista desde otra sesion, por lo que esta solucion viene a ser como un MacGyver ![macgyver](https://user-images.githubusercontent.com/20632410/48397842-afbaff80-e6e4-11e8-8290-c60b9571ef65.jpg)
+
 
 
 
