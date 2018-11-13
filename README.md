@@ -34,11 +34,16 @@ Procedemos a hacer una transaccion
 ![8](https://user-images.githubusercontent.com/20632410/48395817-0d981900-e6de-11e8-913e-54897c2e1766.PNG)
 
 Enseguida revisamos los Redo-Log <br>
-provocamos un checkpoin para que LGWR, el programa responsable de escribir en los Redo-Log files pase del Buffer a disco
-provacamos un switch para que todos los Redo-Log en disco pasen a ser un nuevo Archive
-Volvemos a revisar los Redo-Los y podemos apreciar como la secuencia cambio, ahora se esta escribiendo en el siguiente
+provocamos un checkpoin para que LGWR, el programa responsable de escribir en los Redo-Log files, pase del Buffer a disco <br>
+provacamos un switch para que todos los Redo-Log en disco pasen a ser un nuevo Archive <br>
+volvemos a revisar los Redo-Los y podemos apreciar como la secuencia cambio, ahora se esta escribiendo en el siguiente Redo-Log <br>
 
 ![9](https://user-images.githubusercontent.com/20632410/48396388-d6c30280-e6df-11e8-8644-4fc2714e7cda.PNG)
+
+Observamos que se creo un nuevo Archive, aqui es donde esta la transaccion que realizamos
+
+![10](https://user-images.githubusercontent.com/20632410/48396559-78e2ea80-e6e0-11e8-9377-e23d7efc9a05.PNG)
+
 
 
 
