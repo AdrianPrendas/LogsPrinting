@@ -85,7 +85,7 @@ ahora esta nueva tabla puede ser indexada desde una aplicacion de programa
 
 #### El resultado Final
 
-![jup](https://user-images.githubusercontent.com/20632410/48398391-4936e100-e6e6-11e8-9929-6cc7e7bab30e.PNG)
+![jup](https://user-images.githubusercontent.com/20632410/48398095-6d45f280-e6e5-11e8-90bc-0fbaa1c1a09a.PNG)
 
 #### Jupyter notebook y python proporcionan las herramientas para inspeccionar mas a fondo las transacciones
 
