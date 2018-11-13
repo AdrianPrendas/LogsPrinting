@@ -73,7 +73,20 @@ Especifique el diccionario de datos
 #### En este punto ya se puede consultar la vista, no obstante desde consola es muy dificil apreciar su contenido
 Por lo que se implemento una solucion, ya que esta vista tampoco se puede acceder desde una aplicacion de programa <br>
 sin antes haber ejecutado las instrucciones necesarias para configurar y habilitar el LogMiner, tampoco se podra acceder <br>
-a esta vista desde otra sesion, por lo que esta solucion viene a ser como un MacGyver ![macgyver](https://user-images.githubusercontent.com/20632410/48397842-afbaff80-e6e4-11e8-8290-c60b9571ef65.jpg)
+a esta vista desde otra sesion, por lo que esta solucion viene a ser como un MacGyver 
+
+![macgyver](https://user-images.githubusercontent.com/20632410/48397842-afbaff80-e6e4-11e8-8290-c60b9571ef65.jpg)
+
+#### La solucion es muy simple, creamos una tabla y un procedimiento-almacenado para llenar dicha tabla, con la consulta de la vista
+
+![tool](https://user-images.githubusercontent.com/20632410/48398023-41c30800-e6e5-11e8-8f85-93898405f7c6.PNG)
+
+ahora esta nueva tabla puede ser indexada desde una aplicacion de programa
+
+#### El resultado Final
+
+![jup](https://user-images.githubusercontent.com/20632410/48398095-6d45f280-e6e5-11e8-90bc-0fbaa1c1a09a.PNG)
+
 
 
 
