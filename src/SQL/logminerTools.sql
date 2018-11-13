@@ -13,7 +13,6 @@ create table logminerFiltered(
     sql_1 varchar2(4000)
 );
 
-
 CREATE OR REPLACE PROCEDURE filting_logs 
 IS
   CURSOR cur IS SELECT USERNAME, OPERATION, TABLE_NAME, TABLE_SPACE, SEG_OWNER, TIMESTAMP as date_, (XIDUSN || ':' || XIDSLT || ':' || XIDSQN) AS time_, SQL_REDO, sql_undo 
@@ -42,5 +41,9 @@ show errors;
 
 exec filting_logs
 
---select * from logminerFiltered where username <> 'UNKNOWN' and
---    username <> 'SYS' and table_space <> 'None' and table_space <> 'UNKNOW' and table_name <> 'None';
+--   select * from logminerFiltered 
+--            where username <> 'UNKNOWN' 
+--            and username <> 'SYS' 
+--            and table_space <> 'None' 
+--            and table_space <> 'UNKNOW' 
+--            and table_name <> 'None';
