@@ -44,6 +44,9 @@ Observamos que se creo un nuevo Archive, aqui es donde esta la transaccion que r
 
 ![10](https://user-images.githubusercontent.com/20632410/48396559-78e2ea80-e6e0-11e8-9377-e23d7efc9a05.PNG)
 
+## Ahora lo que sigue es configurar y habilitar el LogMiner para poder ver lo que tienen los Redo-Log que se encuentra en la vista v$LOGMNR_CONTENTS
+
+
 
 
 
