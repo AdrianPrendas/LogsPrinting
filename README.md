@@ -19,3 +19,14 @@ Esta es la base de datos que se utilizo para este ejemplo
 2. La base de datos tiene que estar en modo archive
 
 ![3_1](https://user-images.githubusercontent.com/20632410/48395274-68307580-e6dc-11e8-9a29-f2a51bab118a.PNG)
+
+3. Estos son los "Redo Log" que estan en linea, se puede apreciar que existen 3 grupos y que no estan multiplexados <br>
+la secuencia es 13, el estado current nos dice que en este "Redo Log" se estan escribiendo las transacciones
+
+![4](https://user-images.githubusercontent.com/20632410/48395622-6dda8b00-e6dd-11e8-9de0-6985dfc8157f.PNG)
+
+En la siguiente imagen podemos apreciar los archive que estan en disco
+
+![5](https://user-images.githubusercontent.com/20632410/48395662-99f60c00-e6dd-11e8-9b92-f637f34cd150.PNG)
+
+
